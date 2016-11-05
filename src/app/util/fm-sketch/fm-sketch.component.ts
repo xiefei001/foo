@@ -55,9 +55,9 @@ export class FmSketchComponent implements AfterViewInit {
   onEraseChange() {
     this.eraseActive = !this.eraseActive;
     if (this.eraseActive) {
-      this.canvas.defaultPaintColor = 'white';
+      this.canvas.changeMode('erase');
     } else {
-      this.canvas.defaultPaintColor = this.farbDropdown.nativeElement.value;
+      this.canvas.changeMode('pen');
     }
   }
 

@@ -34,6 +34,7 @@ export class FmCanvasDirective {
 
   private drawing: boolean = false;
   private currentLogicalPoint: LogicalPoint;
+  private mode: string = 'pen';
 
 
   constructor(private element: ElementRef, private renderer: Renderer) {
@@ -73,13 +74,21 @@ export class FmCanvasDirective {
 
       let context = this.element.nativeElement.getContext('2d');
       context.beginPath();
-      // draw line from current point to new point
-      context.moveTo(this.currentLogicalPoint.x, this.currentLogicalPoint.y);
-      context.lineTo(newPoint.x, newPoint.y);
-      context.strokeStyle = this._defaultPaintColor;
-      context.lineWidth = this._defaultLineWidth;
-      context.stroke();
-
+      if (this.mode === 'pen') {
+        context.globalCompositeOperation="source-over";
+        // draw line from current point to new point
+        context.moveTo(this.currentLogicalPoint.x, this.currentLogicalPoint.y);
+        context.lineTo(newPoint.x, newPoint.y);
+        context.strokeStyle = this._defaultPaintColor;
+        context.lineWidth = this._defaultLineWidth;
+        console.log("painting: " + this._defaultPaintColor + this._defaultLineWidth);
+        context.stroke();
+      } else {
+        // erase Mode
+        context.globalCompositeOperation="destination-out";
+        context.arc(newPoint.x,newPoint.y,8,0,Math.PI*2,false);
+        context.fill();
+      }
       // set current point to the new point.
       this.currentLogicalPoint = newPoint;
       //ctx.closePath();
@@ -121,6 +130,16 @@ export class FmCanvasDirective {
     this.genericTouchEventHandler(event, this.onMouseup);
   }
 
+  public clear() {
+    let canvas = this.element.nativeElement;
+    let context = this.element.nativeElement.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  public changeMode(mode: string) {
+    this.mode = mode;
+  }
+
   private genericTouchEventHandler(event: any, func: (touch: Touch) => void): void {
     if (event.changedTouches.length === 1) {
       let touch: Touch = event.changedTouches[0];
@@ -138,9 +157,4 @@ export class FmCanvasDirective {
   }
 
 
-  public clear() {
-    let canvas = this.element.nativeElement;
-    let context = this.element.nativeElement.getContext('2d');
-    context.clearRect(0, 0, canvas.width, canvas.height);
-  }
 }
