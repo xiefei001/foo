@@ -1,0 +1,24 @@
+<canvas fmCanvas width="600" height="400" class="sketch">
+</canvas>
+<nav class="navbar-form navbar-default">
+  <div class="container-fluid">
+    <form class="form-inline">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Brand</a>
+      </div>
+
+      <div class="form-group" style="padding-top: 8px">
+        <label for="farbselect">Farbe Auswählen</label>
+        <select id="farbselect" class="form-control">
+          <option *ngFor="let color of colors" [style.color]="color">
+            {{color}}
+          </option>
+        </select>
+      </div>
+
+      <button type="button" class="btn btn-primary navbar-btn command-button">Speichern</button>
+      <button type="button" class="btn btn-danger navbar-btn command-button" (click)="reset()">Löschen</button>
+      <button type="button" class="btn btn-default navbar-btn command-button">Abbrechen</button>
+    </form>
+  </div>
+</nav>
