@@ -11,5 +11,13 @@
 .command-button {
   float:right;
   margin-left: 20px;
+}
 
+.command-div {
+  padding: 8px 10px;
+}
+
+.command-label {
+  font-size:20px;
+  color: #777;
 }

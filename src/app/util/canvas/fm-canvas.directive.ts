@@ -21,7 +21,10 @@ class LogicalPoint {
   exportAs: 'fm-canvas'
 })
 export class FmCanvasDirective {
+
   private _defaultPaintColor: string = 'blue';
+
+  private _defaultLineWidth: number = 2;
 
   @Input('width')
   private _defaultLogicalWidth: number = 300;
@@ -32,6 +35,7 @@ export class FmCanvasDirective {
   private drawing: boolean = false;
   private currentLogicalPoint: LogicalPoint;
 
+
   constructor(private element: ElementRef, private renderer: Renderer) {
   }
 
@@ -39,6 +43,12 @@ export class FmCanvasDirective {
   @Input()
   set defaultPaintColor(colorName: string) {
     this._defaultPaintColor = colorName || this._defaultPaintColor;
+    console.log("newww color: " + this._defaultPaintColor);
+  }
+
+  @Input()
+  set defaultLineWidth(lineWidth: number) {
+    this._defaultLineWidth = lineWidth || this._defaultLineWidth;
   }
 
 
@@ -66,8 +76,8 @@ export class FmCanvasDirective {
       // draw line from current point to new point
       context.moveTo(this.currentLogicalPoint.x, this.currentLogicalPoint.y);
       context.lineTo(newPoint.x, newPoint.y);
-      context.strokeStyle = 'blue';
-      context.lineWidth = 2;
+      context.strokeStyle = this._defaultPaintColor;
+      context.lineWidth = this._defaultLineWidth;
       context.stroke();
 
       // set current point to the new point.
@@ -131,7 +141,6 @@ export class FmCanvasDirective {
   public clear() {
     let canvas = this.element.nativeElement;
     let context = this.element.nativeElement.getContext('2d');
-    console.log("canvas width: " + canvas.width);
     context.clearRect(0, 0, canvas.width, canvas.height);
   }
 }

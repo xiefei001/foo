@@ -3,22 +3,33 @@
 <nav class="navbar-form navbar-default">
   <div class="container-fluid">
     <form class="form-inline">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">Brand</a>
+      <div class="form-group command-div">
+        <label class="command-label" for="farbselect"><span class="glyphicon glyphicon-pencil"> </span></label>
+        <select #selectColor id="farbselect" class="form-control" (change)="onColorSelectChange($event.target.value)"
+                [style.background-color]="selectColor.value" style="width: 80px;">
+          <option *ngFor="let color of colors" [value]="color" [style.background-color]="color">
+          </option>
+        </select>
       </div>
 
-      <div class="form-group" style="padding-top: 8px">
-        <label for="farbselect">Farbe Auswählen</label>
-        <select id="farbselect" class="form-control">
-          <option *ngFor="let color of colors" [style.color]="color">
-            {{color}}
+
+      <button type="button" class="btn btn-lg navbar-btn"
+              [class.btn-default]="!eraseActive" [class.btn-info]="eraseActive" (click)="onEraseChange()"><span class="glyphicon glyphicon-erase"></span></button>
+
+
+      <div class="form-group command-div">
+        <label class="command-label" for="lineselect">Liniebreite: </label>
+        <select #select id="lineselect" class="form-control" style="width: 80px;"
+                (change)="onLineWidthSelectChange($event.target.value)">
+          <option *ngFor="let lineWidth of lineWidths" [value]="lineWidth" [style.border]="lineWidth">
+            {{lineWidth}}px
           </option>
         </select>
       </div>
 
       <button type="button" class="btn btn-primary navbar-btn command-button">Speichern</button>
-      <button type="button" class="btn btn-danger navbar-btn command-button" (click)="reset()">Löschen</button>
-      <button type="button" class="btn btn-default navbar-btn command-button">Abbrechen</button>
+      <button type="button" class="btn btn-danger navbar-btn command-button" (click)="clean()">Löschen</button>
+      <button type="button" class="btn btn-default navbar-btn command-button" (click)="cancel()">Abbrechen</button>
     </form>
   </div>
 </nav>

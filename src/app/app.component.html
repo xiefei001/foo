@@ -43,7 +43,7 @@
 </div>
 
 
-<div fmModal #sketch="fm-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<div fmModal #sketch="fm-modal" [static]="'true'" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
      aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -51,17 +51,11 @@
         <button type="button" class="close" (click)="sketch.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Large modal</h4>
+        <h4 class="modal-title">Skizze</h4>
       </div>
       <div class="modal-body">
-        <fm-sketch></fm-sketch>
+        <fm-sketch (close)="sketch.hide()"></fm-sketch>
       </div>
     </div>
   </div>
-</div>
-
-
-<canvas fmCanvas style="width: 300px;" width="200"></canvas>
-<div>
-  <button (click)="clear()">Clear</button>
 </div>

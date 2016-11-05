@@ -23,6 +23,9 @@ export class FmModalDirective implements OnInit {
   private hasBackdrop: boolean = true;
 
 
+  @Input()
+  private static: boolean = false;
+
   // Status, ob Modal gezeigt ist.
   private isShown: boolean = false;
 
@@ -67,9 +70,10 @@ export class FmModalDirective implements OnInit {
 
   @HostListener('click', ['$event'])
   public onClick(event: any): void {
-    if (event.target === this.element.nativeElement) {
-      this.hide(event);
+    if (this.static || event.target !== this.element.nativeElement) {
+      return;
     }
+    this.hide(event);
 
   }
 
