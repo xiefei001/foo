@@ -1,12 +1,6 @@
-import {Component, ViewChild, ElementRef} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {FmCanvasDirective} from "../canvas/fm-canvas.directive";
 
-
-class LogicalPoint {
-  constructor(public x: number, public y: number) {
-  }
-
-}
 @Component({
   selector: 'fm-signature',
   templateUrl: './fm-signature.component.html',
@@ -18,8 +12,16 @@ export class FmSignatureComponent {
   @ViewChild(FmCanvasDirective)
   private signatureCanvas: FmCanvasDirective;
 
-  reset(){
+  private status: string = 'aaaaaaaaaaaaaaa';
+
+
+  clean(){
     this.signatureCanvas.clear();
+    this.status = "cccccc";
+  }
+
+  public showStatus(value:string) {
+    this.status = value;
   }
 
 }

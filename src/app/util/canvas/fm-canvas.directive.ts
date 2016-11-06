@@ -1,7 +1,7 @@
 /*
  * Copyright 2016 SWM Services GmbH
  */
-import {Directive, ElementRef, Renderer, Input, HostListener, HostBinding} from '@angular/core';
+import {Directive, ElementRef, Renderer, Input, HostListener, Output, EventEmitter} from '@angular/core';
 
 /**
  * Local Klasse speichert die Dia
@@ -17,14 +17,9 @@ class LogicalPoint {
  * @since 1.0
  */
 @Directive({
-  selector: '[fmCanvas]',
-  exportAs: 'fm-canvas'
+  selector: '[fmCanvas]'
 })
 export class FmCanvasDirective {
-
-  private _defaultPaintColor: string = 'blue';
-
-  private _defaultLineWidth: number = 2;
 
   @Input('width')
   private _defaultLogicalWidth: number = 300;
@@ -32,12 +27,24 @@ export class FmCanvasDirective {
   @Input('height')
   private _defaultLogicalHeight: number = 150;
 
+  @Output()
+  touchStatus: EventEmitter<string> = new EventEmitter<string>();
+
+  private _defaultPaintColor: string = 'blue';
+
+  private _defaultLineWidth: number = 2;
+
+
   private drawing: boolean = false;
   private currentLogicalPoint: LogicalPoint;
   private mode: string = 'pen';
 
 
+
   constructor(private element: ElementRef, private renderer: Renderer) {
+    element.nativeElement.addEventListener('touchstart', ()=>{
+      this.touchStatus.emit("touchstart only on event listener");
+    });
   }
 
 
@@ -55,7 +62,7 @@ export class FmCanvasDirective {
 
   @HostListener('mousedown', ['$event'])
   private onMousedown(event: any) {
-    console.log("mouse down: " + this.drawing);
+    this.touchStatus.emit("mouse down" + this.drawing);
     if (event.target === this.element.nativeElement && !this.drawing) {
       this.drawing = true;
       this.currentLogicalPoint = this.getLogicalPointFromEvent(event);
@@ -75,7 +82,7 @@ export class FmCanvasDirective {
       let context = this.element.nativeElement.getContext('2d');
       context.beginPath();
       if (this.mode === 'pen') {
-        context.globalCompositeOperation="source-over";
+        context.globalCompositeOperation = "source-over";
         // draw line from current point to new point
         context.moveTo(this.currentLogicalPoint.x, this.currentLogicalPoint.y);
         context.lineTo(newPoint.x, newPoint.y);
@@ -85,8 +92,8 @@ export class FmCanvasDirective {
         context.stroke();
       } else {
         // erase Mode
-        context.globalCompositeOperation="destination-out";
-        context.arc(newPoint.x,newPoint.y,8,0,Math.PI*2,false);
+        context.globalCompositeOperation = "destination-out";
+        context.arc(newPoint.x, newPoint.y, 8, 0, Math.PI * 2, false);
         context.fill();
       }
       // set current point to the new point.
@@ -130,6 +137,16 @@ export class FmCanvasDirective {
     this.genericTouchEventHandler(event, this.onMouseup);
   }
 
+  private genericTouchEventHandler(event: any, func: (touch: Touch) => void): void {
+    this.touchStatus.emit('touch event fired');
+    if (event.changedTouches.length === 1) {
+      this.touchStatus.emit('touch event fired' + event.changedTouches.length);
+      let touch: Touch = event.changedTouches[0];
+      func(touch);
+      event.preventDefault();
+    }
+  }
+
   public clear() {
     let canvas = this.element.nativeElement;
     let context = this.element.nativeElement.getContext('2d');
@@ -138,14 +155,6 @@ export class FmCanvasDirective {
 
   public changeMode(mode: string) {
     this.mode = mode;
-  }
-
-  private genericTouchEventHandler(event: any, func: (touch: Touch) => void): void {
-    if (event.changedTouches.length === 1) {
-      let touch: Touch = event.changedTouches[0];
-      func(touch);
-      event.preventDefault();
-    }
   }
 
 

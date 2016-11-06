@@ -1,4 +1,4 @@
-<canvas fmCanvas class="signature" width="200">
+<canvas fmCanvas (touchStatus)="showStatus($event)" class="signature" width="200">
   Sorry, your browser doesn't support the &lt;canvas&gt; element.
 </canvas>
 <nav class="navbar navbar-default">
@@ -11,3 +11,6 @@
     </div>
   </div>
 </nav>
+<div>
+  {{status}}
+</div>

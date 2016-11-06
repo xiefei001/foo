@@ -10,7 +10,16 @@ import {Observable} from 'rxjs';
 export class AppComponent {
   title = 'app works!';
 
+  onlineStatus: string = '';
+
   constructor(private fmImageService: FmImageScaleService) {
+    window.addEventListener('offline', (e:any) =>{
+      this.onlineStatus = "application ist offline";
+    });
+
+    window.addEventListener('online', (e:any) =>{
+      this.onlineStatus = "application ist online";
+    });
   }
 
   onImageSelected(event: any) {
@@ -28,4 +37,5 @@ export class AppComponent {
       console.error(err);
     }
   }
+
 }
