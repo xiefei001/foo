@@ -39,12 +39,66 @@ export class FmCanvasDirective {
   private currentLogicalPoint: LogicalPoint;
   private mode: string = 'pen';
 
-
-
   constructor(private element: ElementRef, private renderer: Renderer) {
-    element.nativeElement.addEventListener('touchstart', ()=>{
-      this.touchStatus.emit("touchstart only on event listener");
+    let self = this;
+    element.nativeElement.addEventListener('touchstart', (event:any)=> {
+      if (event.changedTouches.length === 1) {
+        let touch: Touch = event.changedTouches[0];
+        if (touch.target === this.element.nativeElement && !this.drawing) {
+          this.drawing = true;
+          this.currentLogicalPoint = this.getLogicalPointFromEvent(touch);
+        }
+        event.preventDefault();
+      }
     });
+    element.nativeElement.addEventListener('touchmove', (event:any)=> {
+      if (event.changedTouches.length === 1) {
+        let touch: Touch = event.changedTouches[0];
+        if (touch.target === this.element.nativeElement && this.drawing) {
+          let newPoint = this.getLogicalPointFromEvent(touch);
+
+          let context = this.element.nativeElement.getContext('2d');
+          if (this.mode === 'pen') {
+            //context.globalCompositeOperation = "source-over";
+            // draw line from current point to new point
+            context.beginPath();
+            context.moveTo(this.currentLogicalPoint.x, this.currentLogicalPoint.y);
+            context.lineCap = 'round';
+            context.strokeStyle = this._defaultPaintColor;
+            context.lineWidth = this._defaultLineWidth;
+            context.lineTo(newPoint.x, newPoint.y);
+            context.stroke();
+          } else {
+            // erase Mode
+            context.globalCompositeOperation = "destination-out";
+            context.arc(newPoint.x, newPoint.y, 8, 0, Math.PI * 2, false);
+            context.fill();
+          }
+          // set current point to the new point.
+          this.currentLogicalPoint = newPoint;
+        }
+        event.preventDefault();
+      }
+    });
+    element.nativeElement.addEventListener('touchend', (event:any)=> {
+      if (event.changedTouches.length === 1) {
+        let touch: Touch = event.changedTouches[0];
+        if (touch.target === this.element.nativeElement && this.drawing) {
+          this.drawing = false;
+        }
+        event.preventDefault();
+      }
+    });
+    element.nativeElement.addEventListener('touchleave', (event:any)=> {
+      if (event.changedTouches.length === 1) {
+        let touch: Touch = event.changedTouches[0];
+        if (touch.target === this.element.nativeElement && this.drawing) {
+          this.drawing = false;
+        }
+        event.preventDefault();
+      }
+    });
+
   }
 
 
@@ -66,9 +120,8 @@ export class FmCanvasDirective {
     if (event.target === this.element.nativeElement && !this.drawing) {
       this.drawing = true;
       this.currentLogicalPoint = this.getLogicalPointFromEvent(event);
-      if (event.preventDefault) {
-        event.preventDefault();
-      }
+      event.preventDefault();
+
     }
 
   }
@@ -80,21 +133,24 @@ export class FmCanvasDirective {
       let newPoint = this.getLogicalPointFromEvent(event);
 
       let context = this.element.nativeElement.getContext('2d');
-      context.beginPath();
       if (this.mode === 'pen') {
-        context.globalCompositeOperation = "source-over";
+        //context.globalCompositeOperation = "source-over";
+        //context.lineJoin = 'round';
         // draw line from current point to new point
+        //context.beginPath();
         context.moveTo(this.currentLogicalPoint.x, this.currentLogicalPoint.y);
-        context.lineTo(newPoint.x, newPoint.y);
+        context.lineCap = 'round';
         context.strokeStyle = this._defaultPaintColor;
         context.lineWidth = this._defaultLineWidth;
-        console.log("painting: " + this._defaultPaintColor + this._defaultLineWidth);
+        context.lineTo(newPoint.x, newPoint.y);
         context.stroke();
+        //context.closePath();
       } else {
         // erase Mode
-        context.globalCompositeOperation = "destination-out";
-        context.arc(newPoint.x, newPoint.y, 8, 0, Math.PI * 2, false);
-        context.fill();
+        //context.globalCompositeOperation = "destination-out";
+        //context.arc(newPoint.x, newPoint.y, 8, 0, Math.PI * 2, false);
+        //context.fill();
+        //context.closePath();
       }
       // set current point to the new point.
       this.currentLogicalPoint = newPoint;
@@ -118,29 +174,8 @@ export class FmCanvasDirective {
     }
   }
 
-
-  // ---------------touch Events----------
-  @HostListener('touchstart', ['$event'])
-  private onTouchstart(event: any) {
-    this.genericTouchEventHandler(event, this.onMousedown);
-  }
-
-  @HostListener('touchmove', ['$event'])
-  private onTouchmove(event: any) {
-    this.genericTouchEventHandler(event, this.onMousemove);
-  }
-
-
-  @HostListener('touchend', ['$event'])
-  @HostListener('touchleave', ['$event'])
-  private onTouchend(event: any) {
-    this.genericTouchEventHandler(event, this.onMouseup);
-  }
-
   private genericTouchEventHandler(event: any, func: (touch: Touch) => void): void {
-    this.touchStatus.emit('touch event fired');
     if (event.changedTouches.length === 1) {
-      this.touchStatus.emit('touch event fired' + event.changedTouches.length);
       let touch: Touch = event.changedTouches[0];
       func(touch);
       event.preventDefault();
@@ -165,5 +200,24 @@ export class FmCanvasDirective {
     return new LogicalPoint(x, y);
   }
 
+  // ---------------touch Events still not work with annotation ----------
+  /**
+   @HostListener('touchstart', ['$event'])
+   private onTouchstart(event: any) {
+    this.genericTouchEventHandler(event, this.onMousedown);
+  }
+
+   //@HostListener('touchmove', ['$event'])
+   private onTouchmove(event: any) {
+    this.genericTouchEventHandler(event, this.onMousemove);
+  }
+
+
+   @HostListener('touchend', ['$event'])
+   @HostListener('touchleave', ['$event'])
+   private onTouchend(event: any) {
+    this.genericTouchEventHandler(event, this.onMouseup);
+  }
+   */
 
 }
