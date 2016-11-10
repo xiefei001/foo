@@ -39,10 +39,16 @@ export class FmCanvasDirective {
   private currentLogicalPoint: LogicalPoint;
   private mode: string = 'pen';
 
+  private test(){
+    this.touchStatus.emit("this is: " + this.constructor.prototype);
+  }
+
+
   constructor(private element: ElementRef, private renderer: Renderer) {
     let self = this;
     element.nativeElement.addEventListener('touchstart', (event:any)=> {
       if (event.changedTouches.length === 1) {
+        this.test();
         let touch: Touch = event.changedTouches[0];
         if (touch.target === this.element.nativeElement && !this.drawing) {
           this.drawing = true;
@@ -137,7 +143,7 @@ export class FmCanvasDirective {
         //context.globalCompositeOperation = "source-over";
         //context.lineJoin = 'round';
         // draw line from current point to new point
-        //context.beginPath();
+        context.beginPath();
         context.moveTo(this.currentLogicalPoint.x, this.currentLogicalPoint.y);
         context.lineCap = 'round';
         context.strokeStyle = this._defaultPaintColor;
