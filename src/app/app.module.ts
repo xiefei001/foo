@@ -9,6 +9,7 @@ import { FmModalDirective } from './util/modal/fm-modal.directive';
 import { FmSignatureComponent } from './util/fm-signature/fm-signature.component';
 import {FmCanvasDirective} from "./util/canvas/fm-canvas.directive";
 import { FmSketchComponent } from './util/fm-sketch/fm-sketch.component';
+import { FmProtocolComponent } from './util/fm-protocol/fm-protocol.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FmSketchComponent } from './util/fm-sketch/fm-sketch.component';
     FmModalDirective,
     FmCanvasDirective,
     FmSignatureComponent,
-    FmSketchComponent
+    FmSketchComponent,
+    FmProtocolComponent
   ],
   imports: [
     BrowserModule,

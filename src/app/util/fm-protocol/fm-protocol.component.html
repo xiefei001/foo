@@ -1,0 +1,258 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Dokumentation Begehung</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row form-horizontal">
+      <label class="col-sm-2 control-label">Cluster-Nr</label>
+      <div class="col-sm-3">
+        <p class="form-control-static">160 Hasenbergl</p>
+      </div>
+
+      <label class="col-sm-2 control-label">VTM</label>
+      <div class="col-sm-3">
+        <p class="form-control-static">VTM-11</p>
+      </div>
+    </div>
+    <!-- nächste Linie-->
+    <div class="row form-horizontal">
+      <label class="col-sm-2 control-label">Objekt</label>
+      <div class="col-sm-3">
+        <p class="form-control-static">Dülferstraße 15</p>
+      </div>
+
+      <label class="col-sm-2 control-label">IDX</label>
+      <div class="col-sm-3">
+        <p class="form-control-static">52411</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Dokumentation Begehung</h3>
+  </div>
+  <div class="panel-body">
+    <form class="form-horizontal">
+      <!-- Eigentümer -->
+      <div class="form-group">
+        <div class="col-sm-4" style="text-align: right">
+          <button (click)="showEigentuemeNeu =!showEigentuemeNeu" class="btn btn-circle btn-info">
+            <i class="fa"
+               [class.fa-plus]="!showEigentuemeNeu"
+               [class.fa-minus]="showEigentuemeNeu"
+               aria-hidden="true">
+            </i>
+          </button>
+          <label class="control-label"> Eigentümer</label>
+        </div>
+        <div class="col-sm-8">
+          <p class="form-control-static">GEWOFAG Dienstleistungsgesellschaft mbH München</p>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="showEigentuemeNeu">
+        <label class="col-sm-4 control-label">Eigentümer Neu</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control">
+        </div>
+      </div>
+
+
+      <!-- Vertreter-->
+      <div class="form-group">
+        <div class="col-sm-6" style="text-align: right">
+          <button (click)="showVertreter =!showVertreter" class="btn btn-circle btn-info">
+            <i class="fa"
+               [class.fa-plus]="!showVertreter"
+               [class.fa-minus]="showVertreter"
+               aria-hidden="true">
+            </i>
+          </button>
+          <label class="control-label">Rechtsgeschäftlicher Vertreter</label>
+        </div>
+        <div class="col-sm-6">
+          <p class="form-control-static">GEWOFAG Wohnen GmbH</p>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="showVertreter">
+        <label class="col-sm-6 control-label">Rechtsgeschäftliche Verterter Neu</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-6 control-label">Hausverwaltung/Ansprechpartner</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" value="Herr Verwalter">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-6 control-label">Hausverwaltung/Ansprechpartner Tel</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" value="089-471158">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-6 control-label">Ansprechpartner vor Ort</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" value="Herr Hausmeister">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-6 control-label">Ansprechpartner vor Ort Tel</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" value="089 - 471196">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-6 control-label">Ansprechpartner vor Ort E-Mail</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" value="mustermann@gmx.de, hausmeister@web.de">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Anschlussinformationen</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row form-horizontal">
+      <label class="col-sm-2 control-label">Status</label>
+      <div class="col-sm-3">
+        <p class="form-control-static">Realisierung</p>
+      </div>
+
+      <label class="col-sm-3 control-label">Status Korrektur</label>
+      <div class="col-sm-4">
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            Korrekt<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#">HTML</a></li>
+            <li><a href="#">CSS</a></li>
+            <li><a href="#">JavaScript</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row form-horizontal">
+      <label class="col-sm-2 control-label">WE</label>
+      <div class="col-sm-3">
+        <p class="form-control-static">10</p>
+      </div>
+    </div>
+    <div class="row form-horizontal">
+      <label class="col-sm-2 control-label">GE</label>
+      <div class="col-sm-3">
+        <p class="form-control-static">1</p>
+      </div>
+      <label class="col-sm-3 control-label">Anmerkung</label>
+      <div class="col-sm-4">
+        <textarea cols="20" rows="2"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Begehung</h3>
+  </div>
+  <div class="panel-body">
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-4 control-label">Teilnehmer *)</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-4 control-label">Ergebnis *)</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-4 control-label">Anmerkung</label>
+        <div class="col-sm-8">
+          <textarea cols="40" rows="2"></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Sonstiges</h3>
+  </div>
+  <div class="panel-body">
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Anmerkung</label>
+        <div class="col-sm-10">
+          <textarea rows="4" style="width: 90%"></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Unterschrift</h3>
+  </div>
+  <div class="panel-body">
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Beaustragter</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">Herr Hausmeister</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Unterschrift</label>
+        <div class="col-sm-10">
+          <fm-signature ></fm-signature>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Name</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">Herr Hausmeister</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">E-Mail</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">test@web.de</p>
+          <span>Bestätigungsmail senden</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Unterschrift</label>
+        <div class="col-sm-10">
+          <fm-signature ></fm-signature>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <button class="col-sm-offset-8 col-sm-4 btn btn-primary btn-lg">Speichern</button>
+</div>
