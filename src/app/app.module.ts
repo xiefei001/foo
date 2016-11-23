@@ -10,6 +10,7 @@ import { FmSignatureComponent } from './util/fm-signature/fm-signature.component
 import {FmCanvasDirective} from "./util/canvas/fm-canvas.directive";
 import { FmSketchComponent } from './util/fm-sketch/fm-sketch.component';
 import { FmProtocolComponent } from './util/fm-protocol/fm-protocol.component';
+import {FmStattgefundenComponent} from "./util/fm-stattgefunden/fm-stattgefunden.component";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FmProtocolComponent } from './util/fm-protocol/fm-protocol.component';
     FmCanvasDirective,
     FmSignatureComponent,
     FmSketchComponent,
-    FmProtocolComponent
+    FmProtocolComponent,
+    FmStattgefundenComponent
   ],
   imports: [
     BrowserModule,
