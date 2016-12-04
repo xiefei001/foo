@@ -1,0 +1,12 @@
+<div class="panel panel-default">
+  <div  (click)="onClick()" class="panel-heading" [ngClass]="statusClass">
+    <h3 class="panel-title text-center panel-header-text">
+      <a class="ao-panel-titel">{{title}}</a>
+    </h3>
+  </div>
+  <div class="panel-collapse collapse" #collapseChild style="height: 0px">
+    <div class="panel-body">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

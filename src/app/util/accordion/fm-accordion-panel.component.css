@@ -1,0 +1,22 @@
+.panel-header-text {
+    font-size: 25px;
+    color: #ffffff;
+}
+
+.panel-header-info {
+    background-color: #004358;
+}
+
+.panel-header-success {
+    background-color: #1F8A70;
+}
+
+.panel-header-warning {
+    background-color: #FD7400;
+}
+
+@media all and (max-width: 500px) {
+    .ao-panel-titel {
+        font-size: 18px;
+    }
+}
